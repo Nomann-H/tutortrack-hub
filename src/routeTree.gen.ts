@@ -14,8 +14,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
+import { Route as AuthenticatedTeachersRouteImport } from './routes/_authenticated/teachers'
+import { Route as AuthenticatedStudentsRouteImport } from './routes/_authenticated/students'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBranchesRouteImport } from './routes/_authenticated/branches'
+import { Route as AuthenticatedBatchesRouteImport } from './routes/_authenticated/batches'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -41,6 +44,16 @@ const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedTeachersRoute = AuthenticatedTeachersRouteImport.update({
+  id: '/teachers',
+  path: '/teachers',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudentsRoute = AuthenticatedStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -51,21 +64,32 @@ const AuthenticatedBranchesRoute = AuthenticatedBranchesRouteImport.update({
   path: '/branches',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBatchesRoute = AuthenticatedBatchesRouteImport.update({
+  id: '/batches',
+  path: '/batches',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/students': typeof AuthenticatedStudentsRoute
+  '/teachers': typeof AuthenticatedTeachersRoute
   '/users': typeof AuthenticatedUsersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/students': typeof AuthenticatedStudentsRoute
+  '/teachers': typeof AuthenticatedTeachersRoute
   '/users': typeof AuthenticatedUsersRoute
 }
 export interface FileRoutesById {
@@ -74,8 +98,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/batches': typeof AuthenticatedBatchesRoute
   '/_authenticated/branches': typeof AuthenticatedBranchesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/students': typeof AuthenticatedStudentsRoute
+  '/_authenticated/teachers': typeof AuthenticatedTeachersRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
 }
 export interface FileRouteTypes {
@@ -84,19 +111,34 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
+    | '/batches'
     | '/branches'
     | '/dashboard'
+    | '/students'
+    | '/teachers'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/reset-password' | '/branches' | '/dashboard' | '/users'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/batches'
+    | '/branches'
+    | '/dashboard'
+    | '/students'
+    | '/teachers'
+    | '/users'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/reset-password'
+    | '/_authenticated/batches'
     | '/_authenticated/branches'
     | '/_authenticated/dashboard'
+    | '/_authenticated/students'
+    | '/_authenticated/teachers'
     | '/_authenticated/users'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +186,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/teachers': {
+      id: '/_authenticated/teachers'
+      path: '/teachers'
+      fullPath: '/teachers'
+      preLoaderRoute: typeof AuthenticatedTeachersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/students': {
+      id: '/_authenticated/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof AuthenticatedStudentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -158,18 +214,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBranchesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/batches': {
+      id: '/_authenticated/batches'
+      path: '/batches'
+      fullPath: '/batches'
+      preLoaderRoute: typeof AuthenticatedBatchesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBatchesRoute: typeof AuthenticatedBatchesRoute
   AuthenticatedBranchesRoute: typeof AuthenticatedBranchesRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedStudentsRoute: typeof AuthenticatedStudentsRoute
+  AuthenticatedTeachersRoute: typeof AuthenticatedTeachersRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBatchesRoute: AuthenticatedBatchesRoute,
   AuthenticatedBranchesRoute: AuthenticatedBranchesRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedStudentsRoute: AuthenticatedStudentsRoute,
+  AuthenticatedTeachersRoute: AuthenticatedTeachersRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
 }
 
