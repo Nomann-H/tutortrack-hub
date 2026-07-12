@@ -16,6 +16,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedTimetableRouteImport } from './routes/_authenticated/timetable'
+import { Route as AuthenticatedTestsRouteImport } from './routes/_authenticated/tests'
 import { Route as AuthenticatedTeachersRouteImport } from './routes/_authenticated/teachers'
 import { Route as AuthenticatedSyllabusRouteImport } from './routes/_authenticated/syllabus'
 import { Route as AuthenticatedStudentsRouteImport } from './routes/_authenticated/students'
@@ -59,6 +60,11 @@ const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
 const AuthenticatedTimetableRoute = AuthenticatedTimetableRouteImport.update({
   id: '/timetable',
   path: '/timetable',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTestsRoute = AuthenticatedTestsRouteImport.update({
+  id: '/tests',
+  path: '/tests',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTeachersRoute = AuthenticatedTeachersRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/students': typeof AuthenticatedStudentsRoute
   '/syllabus': typeof AuthenticatedSyllabusRoute
   '/teachers': typeof AuthenticatedTeachersRoute
+  '/tests': typeof AuthenticatedTestsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/students': typeof AuthenticatedStudentsRoute
   '/syllabus': typeof AuthenticatedSyllabusRoute
   '/teachers': typeof AuthenticatedTeachersRoute
+  '/tests': typeof AuthenticatedTestsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/_authenticated/students': typeof AuthenticatedStudentsRoute
   '/_authenticated/syllabus': typeof AuthenticatedSyllabusRoute
   '/_authenticated/teachers': typeof AuthenticatedTeachersRoute
+  '/_authenticated/tests': typeof AuthenticatedTestsRoute
   '/_authenticated/timetable': typeof AuthenticatedTimetableRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
 }
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/students'
     | '/syllabus'
     | '/teachers'
+    | '/tests'
     | '/timetable'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/students'
     | '/syllabus'
     | '/teachers'
+    | '/tests'
     | '/timetable'
     | '/users'
   id:
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/_authenticated/students'
     | '/_authenticated/syllabus'
     | '/_authenticated/teachers'
+    | '/_authenticated/tests'
     | '/_authenticated/timetable'
     | '/_authenticated/users'
   fileRoutesById: FileRoutesById
@@ -285,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/timetable'
       fullPath: '/timetable'
       preLoaderRoute: typeof AuthenticatedTimetableRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tests': {
+      id: '/_authenticated/tests'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof AuthenticatedTestsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/teachers': {
@@ -371,6 +390,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedStudentsRoute: typeof AuthenticatedStudentsRoute
   AuthenticatedSyllabusRoute: typeof AuthenticatedSyllabusRoute
   AuthenticatedTeachersRoute: typeof AuthenticatedTeachersRoute
+  AuthenticatedTestsRoute: typeof AuthenticatedTestsRoute
   AuthenticatedTimetableRoute: typeof AuthenticatedTimetableRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
 }
@@ -386,6 +406,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedStudentsRoute: AuthenticatedStudentsRoute,
   AuthenticatedSyllabusRoute: AuthenticatedSyllabusRoute,
   AuthenticatedTeachersRoute: AuthenticatedTeachersRoute,
+  AuthenticatedTestsRoute: AuthenticatedTestsRoute,
   AuthenticatedTimetableRoute: AuthenticatedTimetableRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
 }
