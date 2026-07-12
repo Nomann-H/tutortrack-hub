@@ -3,11 +3,15 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Bell,
+  BookOpen,
   Building2,
   CalendarDays,
   ClipboardCheck,
+  FileText,
   GraduationCap,
+  HeartHandshake,
   LayoutDashboard,
+  ListChecks,
   LogOut,
   Megaphone,
   Menu,
@@ -15,6 +19,7 @@ import {
   School,
   Users,
   UserSquare2,
+  Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
