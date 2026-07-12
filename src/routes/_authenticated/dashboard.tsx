@@ -40,7 +40,93 @@ function DashboardBody() {
   }
   if (me.isAdmin) return <AdminDashboard />;
   if (me.isTeacher) return <TeacherDashboard teacherId={me.teacherId} />;
+  if (me.isParent) return <ParentDashboard userId={me.userId} />;
   return <StudentDashboard studentId={me.studentId} />;
+}
+
+function ParentDashboard({ userId }: { userId: string }) {
+  const { data: children } = useQuery({
+    queryKey: ["parent-children", userId],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("student_parents")
+        .select("relationship, students(id, full_name, batches(name), branches(name), batch_id)")
+        .eq("user_id", userId);
+      return data ?? [];
+    },
+  });
+
+  const studentIds = (children ?? []).map((c) => c.students?.id).filter((x): x is string => !!x);
+
+  const { data: perStudent } = useQuery({
+    queryKey: ["parent-child-stats", studentIds],
+    enabled: studentIds.length > 0,
+    queryFn: async () => {
+      const [att, marks] = await Promise.all([
+        supabase.from("student_attendance").select("student_id, status").in("student_id", studentIds),
+        supabase.from("test_marks").select("student_id, marks_obtained, is_absent, tests(max_marks, title, test_date)").in("student_id", studentIds),
+      ]);
+      const stats: Record<string, { presentPct: number | null; recentMark: { title: string; score: string } | null }> = {};
+      for (const id of studentIds) {
+        const rows = (att.data ?? []).filter((r) => r.student_id === id);
+        const present = rows.filter((r) => r.status === "present" || r.status === "late").length;
+        const mrows = (marks.data ?? []).filter((r) => r.student_id === id && r.tests).sort((a, b) => (b.tests!.test_date ?? "").localeCompare(a.tests!.test_date ?? ""));
+        const recent = mrows[0];
+        stats[id] = {
+          presentPct: rows.length ? Math.round((present / rows.length) * 100) : null,
+          recentMark: recent ? {
+            title: recent.tests!.title,
+            score: recent.is_absent ? "Absent" : `${recent.marks_obtained}/${recent.tests!.max_marks}`,
+          } : null,
+        };
+      }
+      return stats;
+    },
+  });
+
+  if ((children ?? []).length === 0) {
+    return (
+      <Card>
+        <CardContent className="py-10 text-center text-sm text-muted-foreground">
+          No children linked to your account yet. Ask the institute to link your account as parent.
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <h2 className="font-display text-lg font-semibold">My Children</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        {(children ?? []).map((c) => {
+          const s = c.students;
+          if (!s) return null;
+          const stat = perStudent?.[s.id];
+          return (
+            <Card key={s.id}>
+              <CardHeader><CardTitle className="text-base">{s.full_name}</CardTitle></CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <p className="text-muted-foreground">{s.batches?.name || "No batch"} · {s.branches?.name || ""}</p>
+                <div className="flex items-center justify-between rounded-lg bg-secondary/50 px-3 py-2">
+                  <span className="text-muted-foreground">Attendance</span>
+                  <span className="font-semibold">{stat?.presentPct != null ? `${stat.presentPct}%` : "—"}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-lg bg-secondary/50 px-3 py-2">
+                  <span className="text-muted-foreground">Latest test</span>
+                  <span className="font-semibold">{stat?.recentMark ? `${stat.recentMark.title}: ${stat.recentMark.score}` : "—"}</span>
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <Link to="/tests" className="text-primary text-xs hover:underline">View marks</Link>
+                  <Link to="/homework" className="text-primary text-xs hover:underline">Homework</Link>
+                  <Link to="/notifications" className="text-primary text-xs hover:underline">Alerts</Link>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 function StatCard({ icon: Icon, label, value, to }: { icon: typeof Building2; label: string; value: number | string; to?: string }) {
