@@ -16,10 +16,16 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedTimetableRouteImport } from './routes/_authenticated/timetable'
+import { Route as AuthenticatedTestsRouteImport } from './routes/_authenticated/tests'
 import { Route as AuthenticatedTeachersRouteImport } from './routes/_authenticated/teachers'
+import { Route as AuthenticatedSyllabusRouteImport } from './routes/_authenticated/syllabus'
 import { Route as AuthenticatedStudentsRouteImport } from './routes/_authenticated/students'
+import { Route as AuthenticatedSalaryRouteImport } from './routes/_authenticated/salary'
+import { Route as AuthenticatedParentsRouteImport } from './routes/_authenticated/parents'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedNotesRouteImport } from './routes/_authenticated/notes'
 import { Route as AuthenticatedLeavesRouteImport } from './routes/_authenticated/leaves'
+import { Route as AuthenticatedHomeworkRouteImport } from './routes/_authenticated/homework'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBranchesRouteImport } from './routes/_authenticated/branches'
 import { Route as AuthenticatedBatchesRouteImport } from './routes/_authenticated/batches'
@@ -60,14 +66,34 @@ const AuthenticatedTimetableRoute = AuthenticatedTimetableRouteImport.update({
   path: '/timetable',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedTestsRoute = AuthenticatedTestsRouteImport.update({
+  id: '/tests',
+  path: '/tests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedTeachersRoute = AuthenticatedTeachersRouteImport.update({
   id: '/teachers',
   path: '/teachers',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSyllabusRoute = AuthenticatedSyllabusRouteImport.update({
+  id: '/syllabus',
+  path: '/syllabus',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStudentsRoute = AuthenticatedStudentsRouteImport.update({
   id: '/students',
   path: '/students',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSalaryRoute = AuthenticatedSalaryRouteImport.update({
+  id: '/salary',
+  path: '/salary',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedParentsRoute = AuthenticatedParentsRouteImport.update({
+  id: '/parents',
+  path: '/parents',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedNotificationsRoute =
@@ -76,9 +102,19 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedNotesRoute = AuthenticatedNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLeavesRoute = AuthenticatedLeavesRouteImport.update({
   id: '/leaves',
   path: '/leaves',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHomeworkRoute = AuthenticatedHomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -118,10 +154,16 @@ export interface FileRoutesByFullPath {
   '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/homework': typeof AuthenticatedHomeworkRoute
   '/leaves': typeof AuthenticatedLeavesRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/parents': typeof AuthenticatedParentsRoute
+  '/salary': typeof AuthenticatedSalaryRoute
   '/students': typeof AuthenticatedStudentsRoute
+  '/syllabus': typeof AuthenticatedSyllabusRoute
   '/teachers': typeof AuthenticatedTeachersRoute
+  '/tests': typeof AuthenticatedTestsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -135,10 +177,16 @@ export interface FileRoutesByTo {
   '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/homework': typeof AuthenticatedHomeworkRoute
   '/leaves': typeof AuthenticatedLeavesRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/parents': typeof AuthenticatedParentsRoute
+  '/salary': typeof AuthenticatedSalaryRoute
   '/students': typeof AuthenticatedStudentsRoute
+  '/syllabus': typeof AuthenticatedSyllabusRoute
   '/teachers': typeof AuthenticatedTeachersRoute
+  '/tests': typeof AuthenticatedTestsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -154,10 +202,16 @@ export interface FileRoutesById {
   '/_authenticated/batches': typeof AuthenticatedBatchesRoute
   '/_authenticated/branches': typeof AuthenticatedBranchesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/homework': typeof AuthenticatedHomeworkRoute
   '/_authenticated/leaves': typeof AuthenticatedLeavesRoute
+  '/_authenticated/notes': typeof AuthenticatedNotesRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/parents': typeof AuthenticatedParentsRoute
+  '/_authenticated/salary': typeof AuthenticatedSalaryRoute
   '/_authenticated/students': typeof AuthenticatedStudentsRoute
+  '/_authenticated/syllabus': typeof AuthenticatedSyllabusRoute
   '/_authenticated/teachers': typeof AuthenticatedTeachersRoute
+  '/_authenticated/tests': typeof AuthenticatedTestsRoute
   '/_authenticated/timetable': typeof AuthenticatedTimetableRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
 }
@@ -173,10 +227,16 @@ export interface FileRouteTypes {
     | '/batches'
     | '/branches'
     | '/dashboard'
+    | '/homework'
     | '/leaves'
+    | '/notes'
     | '/notifications'
+    | '/parents'
+    | '/salary'
     | '/students'
+    | '/syllabus'
     | '/teachers'
+    | '/tests'
     | '/timetable'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
@@ -190,10 +250,16 @@ export interface FileRouteTypes {
     | '/batches'
     | '/branches'
     | '/dashboard'
+    | '/homework'
     | '/leaves'
+    | '/notes'
     | '/notifications'
+    | '/parents'
+    | '/salary'
     | '/students'
+    | '/syllabus'
     | '/teachers'
+    | '/tests'
     | '/timetable'
     | '/users'
   id:
@@ -208,10 +274,16 @@ export interface FileRouteTypes {
     | '/_authenticated/batches'
     | '/_authenticated/branches'
     | '/_authenticated/dashboard'
+    | '/_authenticated/homework'
     | '/_authenticated/leaves'
+    | '/_authenticated/notes'
     | '/_authenticated/notifications'
+    | '/_authenticated/parents'
+    | '/_authenticated/salary'
     | '/_authenticated/students'
+    | '/_authenticated/syllabus'
     | '/_authenticated/teachers'
+    | '/_authenticated/tests'
     | '/_authenticated/timetable'
     | '/_authenticated/users'
   fileRoutesById: FileRoutesById
@@ -275,11 +347,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTimetableRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/tests': {
+      id: '/_authenticated/tests'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof AuthenticatedTestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/teachers': {
       id: '/_authenticated/teachers'
       path: '/teachers'
       fullPath: '/teachers'
       preLoaderRoute: typeof AuthenticatedTeachersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/syllabus': {
+      id: '/_authenticated/syllabus'
+      path: '/syllabus'
+      fullPath: '/syllabus'
+      preLoaderRoute: typeof AuthenticatedSyllabusRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/students': {
@@ -289,6 +375,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/salary': {
+      id: '/_authenticated/salary'
+      path: '/salary'
+      fullPath: '/salary'
+      preLoaderRoute: typeof AuthenticatedSalaryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/parents': {
+      id: '/_authenticated/parents'
+      path: '/parents'
+      fullPath: '/parents'
+      preLoaderRoute: typeof AuthenticatedParentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/notifications': {
       id: '/_authenticated/notifications'
       path: '/notifications'
@@ -296,11 +396,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notes': {
+      id: '/_authenticated/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AuthenticatedNotesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/leaves': {
       id: '/_authenticated/leaves'
       path: '/leaves'
       fullPath: '/leaves'
       preLoaderRoute: typeof AuthenticatedLeavesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/homework': {
+      id: '/_authenticated/homework'
+      path: '/homework'
+      fullPath: '/homework'
+      preLoaderRoute: typeof AuthenticatedHomeworkRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -347,10 +461,16 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBatchesRoute: typeof AuthenticatedBatchesRoute
   AuthenticatedBranchesRoute: typeof AuthenticatedBranchesRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedHomeworkRoute: typeof AuthenticatedHomeworkRoute
   AuthenticatedLeavesRoute: typeof AuthenticatedLeavesRoute
+  AuthenticatedNotesRoute: typeof AuthenticatedNotesRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedParentsRoute: typeof AuthenticatedParentsRoute
+  AuthenticatedSalaryRoute: typeof AuthenticatedSalaryRoute
   AuthenticatedStudentsRoute: typeof AuthenticatedStudentsRoute
+  AuthenticatedSyllabusRoute: typeof AuthenticatedSyllabusRoute
   AuthenticatedTeachersRoute: typeof AuthenticatedTeachersRoute
+  AuthenticatedTestsRoute: typeof AuthenticatedTestsRoute
   AuthenticatedTimetableRoute: typeof AuthenticatedTimetableRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
 }
@@ -361,10 +481,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBatchesRoute: AuthenticatedBatchesRoute,
   AuthenticatedBranchesRoute: AuthenticatedBranchesRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedHomeworkRoute: AuthenticatedHomeworkRoute,
   AuthenticatedLeavesRoute: AuthenticatedLeavesRoute,
+  AuthenticatedNotesRoute: AuthenticatedNotesRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedParentsRoute: AuthenticatedParentsRoute,
+  AuthenticatedSalaryRoute: AuthenticatedSalaryRoute,
   AuthenticatedStudentsRoute: AuthenticatedStudentsRoute,
+  AuthenticatedSyllabusRoute: AuthenticatedSyllabusRoute,
   AuthenticatedTeachersRoute: AuthenticatedTeachersRoute,
+  AuthenticatedTestsRoute: AuthenticatedTestsRoute,
   AuthenticatedTimetableRoute: AuthenticatedTimetableRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
 }

@@ -3,11 +3,15 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Bell,
+  BookOpen,
   Building2,
   CalendarDays,
   ClipboardCheck,
+  FileText,
   GraduationCap,
+  HeartHandshake,
   LayoutDashboard,
+  ListChecks,
   LogOut,
   Megaphone,
   Menu,
@@ -15,6 +19,7 @@ import {
   School,
   Users,
   UserSquare2,
+  Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -36,9 +41,15 @@ const NAV: NavItem[] = [
   { to: "/users", label: "Users & Roles", icon: Users, show: (m) => m.isSuperAdmin },
   { to: "/teachers", label: "Teachers", icon: UserSquare2, show: (m) => m.isAdmin },
   { to: "/students", label: "Students", icon: GraduationCap, show: (m) => m.isAdmin || m.isTeacher },
+  { to: "/parents", label: "Parents", icon: HeartHandshake, show: (m) => m.isAdmin },
   { to: "/batches", label: "Batches", icon: School, show: (m) => m.isAdmin || m.isTeacher },
   { to: "/timetable", label: "Timetable", icon: CalendarDays, show: () => true },
   { to: "/attendance", label: "Attendance", icon: ClipboardCheck, show: (m) => m.isAdmin || m.isTeacher },
+  { to: "/syllabus", label: "Syllabus", icon: ListChecks, show: () => true },
+  { to: "/tests", label: "Tests & Marks", icon: BookOpen, show: () => true },
+  { to: "/homework", label: "Homework", icon: NotebookPen, show: () => true },
+  { to: "/notes", label: "Notes Library", icon: FileText, show: () => true },
+  { to: "/salary", label: "Salary", icon: Wallet, show: (m) => m.isAdmin || m.isTeacher },
   { to: "/leaves", label: "Leaves", icon: NotebookPen, show: (m) => m.isAdmin || m.isTeacher },
   { to: "/announcements", label: "Announcements", icon: Megaphone, show: () => true },
 ];
