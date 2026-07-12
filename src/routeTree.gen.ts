@@ -22,6 +22,7 @@ import { Route as AuthenticatedSyllabusRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedStudentsRouteImport } from './routes/_authenticated/students'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedLeavesRouteImport } from './routes/_authenticated/leaves'
+import { Route as AuthenticatedHomeworkRouteImport } from './routes/_authenticated/homework'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBranchesRouteImport } from './routes/_authenticated/branches'
 import { Route as AuthenticatedBatchesRouteImport } from './routes/_authenticated/batches'
@@ -93,6 +94,11 @@ const AuthenticatedLeavesRoute = AuthenticatedLeavesRouteImport.update({
   path: '/leaves',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHomeworkRoute = AuthenticatedHomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/homework': typeof AuthenticatedHomeworkRoute
   '/leaves': typeof AuthenticatedLeavesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/students': typeof AuthenticatedStudentsRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/batches': typeof AuthenticatedBatchesRoute
   '/branches': typeof AuthenticatedBranchesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/homework': typeof AuthenticatedHomeworkRoute
   '/leaves': typeof AuthenticatedLeavesRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/students': typeof AuthenticatedStudentsRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/_authenticated/batches': typeof AuthenticatedBatchesRoute
   '/_authenticated/branches': typeof AuthenticatedBranchesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/homework': typeof AuthenticatedHomeworkRoute
   '/_authenticated/leaves': typeof AuthenticatedLeavesRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/students': typeof AuthenticatedStudentsRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/batches'
     | '/branches'
     | '/dashboard'
+    | '/homework'
     | '/leaves'
     | '/notifications'
     | '/students'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/batches'
     | '/branches'
     | '/dashboard'
+    | '/homework'
     | '/leaves'
     | '/notifications'
     | '/students'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/_authenticated/batches'
     | '/_authenticated/branches'
     | '/_authenticated/dashboard'
+    | '/_authenticated/homework'
     | '/_authenticated/leaves'
     | '/_authenticated/notifications'
     | '/_authenticated/students'
@@ -341,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeavesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/homework': {
+      id: '/_authenticated/homework'
+      path: '/homework'
+      fullPath: '/homework'
+      preLoaderRoute: typeof AuthenticatedHomeworkRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -385,6 +404,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBatchesRoute: typeof AuthenticatedBatchesRoute
   AuthenticatedBranchesRoute: typeof AuthenticatedBranchesRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedHomeworkRoute: typeof AuthenticatedHomeworkRoute
   AuthenticatedLeavesRoute: typeof AuthenticatedLeavesRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedStudentsRoute: typeof AuthenticatedStudentsRoute
@@ -401,6 +421,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBatchesRoute: AuthenticatedBatchesRoute,
   AuthenticatedBranchesRoute: AuthenticatedBranchesRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedHomeworkRoute: AuthenticatedHomeworkRoute,
   AuthenticatedLeavesRoute: AuthenticatedLeavesRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedStudentsRoute: AuthenticatedStudentsRoute,
