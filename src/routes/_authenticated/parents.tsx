@@ -26,12 +26,26 @@ function ParentsPage() {
   const { data: students } = useQuery({
     queryKey: ["students-with-parents"],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: sData } = await supabase
         .from("students")
-        .select("id, full_name, guardian_name, batches(name), branches(name), student_parents(id, user_id, relationship, profiles:profiles!student_parents_user_id_fkey(full_name, email))")
+        .select("id, full_name, guardian_name, batches(name), branches(name), student_parents(id, user_id, relationship)")
         .eq("is_active", true)
         .order("full_name");
-      return data ?? [];
+      const students = sData ?? [];
+      const parentIds = Array.from(new Set(students.flatMap((s) => (s.student_parents ?? []).map((p: { user_id: string }) => p.user_id))));
+      let profileMap: Record<string, { full_name: string | null; email: string }> = {};
+      if (parentIds.length) {
+        const { data: profs } = await supabase.from("profiles").select("id, full_name, email").in("id", parentIds);
+        profileMap = Object.fromEntries((profs ?? []).map((p) => [p.id, { full_name: p.full_name, email: p.email }]));
+      }
+      return students.map((s) => ({
+        ...s,
+        parent_links: (s.student_parents ?? []).map((p: { id: string; user_id: string; relationship: string | null }) => ({
+          id: p.id,
+          relationship: p.relationship,
+          profile: profileMap[p.user_id] ?? null,
+        })),
+      }));
     },
   });
 
