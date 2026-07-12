@@ -177,6 +177,53 @@ export type Database = {
         }
         Relationships: []
       }
+      homework: {
+        Row: {
+          attachment_url: string | null
+          batch_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          subject: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          attachment_url?: string | null
+          batch_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          subject?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          attachment_url?: string | null
+          batch_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          subject?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "batches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leave_requests: {
         Row: {
           attachment_url: string | null
@@ -306,6 +353,50 @@ export type Database = {
           },
         ]
       }
+      notes: {
+        Row: {
+          batch_id: string
+          created_at: string
+          description: string | null
+          file_url: string | null
+          id: string
+          subject: string | null
+          title: string
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          batch_id: string
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          subject?: string | null
+          title: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          batch_id?: string
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          subject?: string | null
+          title?: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "batches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           body: string | null
@@ -372,6 +463,68 @@ export type Database = {
         }
         Relationships: []
       }
+      salary_payments: {
+        Row: {
+          base_salary: number
+          bonus: number
+          created_at: string
+          created_by: string | null
+          deductions: number
+          id: string
+          is_paid: boolean
+          month: number
+          net_amount: number
+          notes: string | null
+          paid_at: string | null
+          payment_method: string | null
+          teacher_id: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          base_salary?: number
+          bonus?: number
+          created_at?: string
+          created_by?: string | null
+          deductions?: number
+          id?: string
+          is_paid?: boolean
+          month: number
+          net_amount?: number
+          notes?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          teacher_id: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          base_salary?: number
+          bonus?: number
+          created_at?: string
+          created_by?: string | null
+          deductions?: number
+          id?: string
+          is_paid?: boolean
+          month?: number
+          net_amount?: number
+          notes?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          teacher_id?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "salary_payments_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_attendance: {
         Row: {
           attendance_date: string
@@ -410,6 +563,38 @@ export type Database = {
           },
           {
             foreignKeyName: "student_attendance_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_parents: {
+        Row: {
+          created_at: string
+          id: string
+          relationship: string | null
+          student_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          relationship?: string | null
+          student_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          relationship?: string | null
+          student_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_parents_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
             referencedRelation: "students"
@@ -520,6 +705,59 @@ export type Database = {
             columns: ["branch_id"]
             isOneToOne: false
             referencedRelation: "branches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      syllabus_topics: {
+        Row: {
+          batch_id: string
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_completed: boolean
+          sort_order: number
+          subject: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          batch_id: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          sort_order?: number
+          subject?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          batch_id?: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          sort_order?: number
+          subject?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "syllabus_topics_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "batches"
             referencedColumns: ["id"]
           },
         ]
@@ -643,6 +881,104 @@ export type Database = {
         }
         Relationships: []
       }
+      test_marks: {
+        Row: {
+          created_at: string
+          entered_by: string | null
+          id: string
+          is_absent: boolean
+          marks_obtained: number | null
+          remarks: string | null
+          student_id: string
+          test_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          entered_by?: string | null
+          id?: string
+          is_absent?: boolean
+          marks_obtained?: number | null
+          remarks?: string | null
+          student_id: string
+          test_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          entered_by?: string | null
+          id?: string
+          is_absent?: boolean
+          marks_obtained?: number | null
+          remarks?: string | null
+          student_id?: string
+          test_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_marks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "test_marks_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tests: {
+        Row: {
+          batch_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          max_marks: number
+          subject: string | null
+          test_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          batch_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          max_marks?: number
+          subject?: string | null
+          test_date: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          batch_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          max_marks?: number
+          subject?: string | null
+          test_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tests_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "batches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           branch_id: string | null
@@ -681,7 +1017,15 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_parent_of: {
+        Args: { _student_id: string; _user_id: string }
+        Returns: boolean
+      }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      teaches_batch: {
+        Args: { _batch_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:
