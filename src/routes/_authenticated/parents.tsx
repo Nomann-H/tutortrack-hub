@@ -131,7 +131,7 @@ function ParentsPage() {
     >
       <div className="space-y-3">
         {(students ?? []).map((s) => {
-          const links = (s.student_parents ?? []) as Array<{ id: string; relationship: string | null; profiles: { full_name: string | null; email: string } | null }>;
+          const links = s.parent_links ?? [];
           return (
             <div key={s.id} className="rounded-xl border border-border bg-card p-4">
               <div className="flex flex-wrap items-start justify-between gap-2">
@@ -149,8 +149,8 @@ function ParentsPage() {
                   {links.map((l) => (
                     <div key={l.id} className="flex items-center justify-between rounded-lg bg-secondary/50 px-3 py-2 text-sm">
                       <div>
-                        <p className="font-medium">{l.profiles?.full_name || l.profiles?.email}</p>
-                        <p className="text-xs text-muted-foreground">{l.profiles?.email}{l.relationship ? ` · ${l.relationship}` : ""}</p>
+                        <p className="font-medium">{l.profile?.full_name || l.profile?.email}</p>
+                        <p className="text-xs text-muted-foreground">{l.profile?.email}{l.relationship ? ` · ${l.relationship}` : ""}</p>
                       </div>
                       <Button variant="ghost" size="icon" onClick={() => removeLink(l.id)} aria-label="Unlink">
                         <Trash2 className="h-4 w-4 text-destructive" />
