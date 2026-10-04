@@ -1008,6 +1008,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      current_user_is_parent_of_batch: {
+        Args: { _batch_id: string }
+        Returns: boolean
+      }
+      current_user_is_parent_of_branch: {
+        Args: { _branch_id: string }
+        Returns: boolean
+      }
       ensure_profile: { Args: { _full_name?: string }; Returns: undefined }
       has_role: {
         Args: {
